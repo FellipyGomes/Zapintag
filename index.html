@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css
-  <meta charset="UTF-8">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#111111">
 
@@ -149,7 +153,8 @@
 <main class="page">
 
   <header class="brand">
-    
+
+    <img id="logo" class="logo" src="" alt="Logo">
 
     <h1 id="titulo">
       Como podemos ajudar?
@@ -273,9 +278,55 @@ function configurarBotao(id, link){
 
 const params = new URLSearchParams(window.location.search);
 
-const clienteId = params.get("cliente");
+const clienteId =
+  params.get("cliente") || "cli_a7x9k2";
+``
 
-const cliente = clientes[clienteId];
+if(cliente){
+
+  document.getElementById("titulo").innerText =
+    cliente.nome;
+
+  document.getElementById("logo").src =
+    cliente.logo;
+
+  configurarBotao("whatsapp", cliente.whatsapp);
+  configurarBotao("instagram", cliente.instagram);
+  configurarBotao("google", cliente.google);
+
+} else {
+
+  document.querySelector(".page").innerHTML = `
+    <div style="
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      height:100%;
+      text-align:center;
+      padding:40px;
+    ">
+
+      <div style="font-size:50px;">⚠️</div>
+
+      <h1 style="
+        margin-top:15px;
+        margin-bottom:10px;
+      ">
+        Página indisponível
+      </h1>
+
+      <p style="
+        color:#666;
+        line-height:1.6;
+      ">
+        Este identificador não está ativo ou não existe.
+      </p>
+
+    </div>
+  `;
+
+}
 
 if(cliente){
 
