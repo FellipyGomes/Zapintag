@@ -228,7 +228,7 @@ const clientes = {
   "cli_a7x9k2": {
     nome: "Skyfit Invernada",
     logo: "logos/skyfit.png",
-    whatsapp: "https://wa.me/19996001716",
+    whatsapp: "https://wa.me/5519996001716",
     instagram: "https://www.instagram.com/skyfitinvernada/",
     google: "https://search.google.com/local/writereview?placeid=ChIJtakFYQDNyJQR-mG-j5o3IMA"
   },
@@ -267,12 +267,14 @@ const clientes = {
 
 };
 
-function configurarBotao(id, link){
+function configurarBotao(id, link) {
   const botao = document.getElementById(id);
 
-  if(link && link.trim() !== ""){
+  if (link && link.trim() !== "") {
     botao.href = link;
     botao.style.display = "flex";
+  } else {
+    botao.style.display = "none";
   }
 }
 
@@ -280,9 +282,10 @@ const params = new URLSearchParams(window.location.search);
 
 const clienteId =
   params.get("cliente") || "cli_a7x9k2";
-``
 
-if(cliente){
+const cliente = clientes[clienteId];
+
+if (cliente) {
 
   document.getElementById("titulo").innerText =
     cliente.nome;
@@ -298,47 +301,30 @@ if(cliente){
 
   document.querySelector(".page").innerHTML = `
     <div style="
+      height:100%;
       display:flex;
       flex-direction:column;
       justify-content:center;
       align-items:center;
-      height:100%;
       text-align:center;
       padding:40px;
     ">
+      <div style="font-size:56px;margin-bottom:20px;">
+        ⚠️
+      </div>
 
-      <div style="font-size:50px;">⚠️</div>
-
-      <h1 style="
-        margin-top:15px;
-        margin-bottom:10px;
-      ">
-        Página indisponível
+      <h1 style="margin-bottom:12px;">
+        Cliente não encontrado
       </h1>
 
       <p style="
         color:#666;
         line-height:1.6;
       ">
-        Este identificador não está ativo ou não existe.
+        O identificador informado não existe ou não está ativo.
       </p>
-
     </div>
   `;
-
-}
-
-if(cliente){
-
-  document.getElementById("titulo").innerText =
-    cliente.nome;
-
-  document.getElementById("logo").src =
-    cliente.logo;
-
-  configurarBotao("whatsapp", cliente.whatsapp);
-  configurarBotao("instagram", cliente.instagram);
-  configurarBotao("google", cliente.google);
 
 }
 
