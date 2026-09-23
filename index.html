@@ -57,6 +57,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
       background:#111;
     }
 
+    .subtitle{
+  margin-top: 6px;
+  color: #666;
+  font-size: 14px;
+  font-weight: 400;
+}
+
     .brand h1{
       font-size:25px;
       line-height:1.15;
@@ -152,18 +159,17 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 <main class="page">
 
-  <header class="brand">
+<header class="brand">
 
-    <img id="logo" class="logo" src="" alt="Logo">
+  <img id="logo" class="logo" src="" alt="Logo">
 
-    <h1 id="titulo">
-      Como podemos ajudar?
-    </h1>
+  <h1 id="titulo">
+    Como podemos ajudar?
+  </h1>
 
-    <p>
-      SLOGAN CLIENTE.
-    </p>
-  </header>
+  <p id="subtitle" class="subtitle"></p>
+
+</header>
 
   <section class="options">
 
@@ -227,6 +233,7 @@ const clientes = {
 
   "cli_a7x9k2": {
     nome: "EMPRESA",
+    subtitle: "SLOGAN OU FRASE",
     logo: "logos/.png",
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
@@ -234,7 +241,8 @@ const clientes = {
   },
 
   "cli_b4m8r1": {
-     nome: "EMPRESA",
+    nome: "EMPRESA",
+    subtitle: "SLOGAN OU FRASE",
     logo: "logos/.png",
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
@@ -242,7 +250,8 @@ const clientes = {
   },
   
   "cli_d2k6n8": {
-     nome: "EMPRESA",
+    nome: "EMPRESA",
+    subtitle: "SLOGAN OU FRASE",
     logo: "logos/.png",
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
@@ -251,6 +260,7 @@ const clientes = {
 
   "cli_e5q1v9": {
     nome: "EMPRESA",
+    subtitle: "SLOGAN OU FRASE",
     logo: "logos/.png",
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
@@ -259,6 +269,7 @@ const clientes = {
 
   "cli_c9x3p7": {
     nome: "EMPRESA",
+    subtitle: "SLOGAN OU FRASE",
     logo: "logos/.png",
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
@@ -292,6 +303,9 @@ if (cliente) {
 
   document.getElementById("logo").src =
     cliente.logo;
+
+  document.getElementById("subtitle").innerText =
+  cliente.subtitle || "";
 
   configurarBotao("whatsapp", cliente.whatsapp);
   configurarBotao("instagram", cliente.instagram);
