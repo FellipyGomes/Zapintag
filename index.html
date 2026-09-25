@@ -1,396 +1,345 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#111111">
-<title>ZapInTag</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-<style>
-  :root{
-    --fundo:#f5f5f5;
-    --cartao:#fff;
-    --texto:#111;
-    --suave:#666;
-    --borda:#e2e2e2;
-    --icone-bg:#f2f2f2;
-    --destaque:#111;
-    --destaque-texto:#fff;
-    --raio:17px;
-    --fonte:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111111">
 
-  body{
-    min-height:100vh;
-    font-family:var(--fonte);
-    background:var(--fundo);
-    color:var(--texto);
-    display:flex;
-    justify-content:center;
-    padding:24px 16px;
-  }
-  .page{
-    width:100%;
-    max-width:430px;
-    min-height:calc(100vh - 48px);
-    background:var(--cartao);
-    border:1px solid var(--borda);
-    border-radius:24px;
-    padding:34px 22px 24px;
-    display:flex;
-    flex-direction:column;
-    box-shadow:0 8px 30px rgba(0,0,0,.06);
-  }
-  .brand{text-align:center;margin-bottom:28px}
-  .logo{
-    width:76px;height:76px;border-radius:50%;
-    object-fit:cover;display:block;margin:0 auto 16px;background:var(--destaque);
-  }
-  .brand h1{font-size:25px;line-height:1.15;font-weight:750;letter-spacing:-.5px}
-  .subtitle{margin-top:9px;color:var(--suave);font-size:15px;line-height:1.45}
+  <title>Bem Vindo!</title>
 
-  .options{display:flex;flex-direction:column;gap:13px}
-  .option{
-    display:flex;align-items:center;gap:15px;
-    width:100%;min-height:76px;padding:13px 16px;
-    border:1px solid var(--borda);border-radius:var(--raio);
-    background:var(--cartao);color:var(--texto);
-    text-decoration:none;transition:.15s;
-  }
-  .option:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(0,0,0,.07)}
-  .option:focus-visible{outline:3px solid var(--destaque);outline-offset:2px}
-  .icon{
-    width:48px;height:48px;flex:0 0 48px;border-radius:14px;
-    background:var(--icone-bg);display:flex;align-items:center;justify-content:center;font-size:24px;
-  }
-  .text{flex:1}
-  .text strong{display:block;font-size:16px;margin-bottom:3px}
-  .text span{display:block;color:var(--suave);font-size:13px}
-  .arrow{color:var(--suave);font-size:22px}
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
 
-  .footer{
-    margin-top:auto;padding-top:28px;text-align:center;
-    color:var(--suave);font-size:12px;line-height:1.6;opacity:.85;
-  }
-  .nfc{margin-bottom:8px;display:inline-flex;align-items:center;gap:6px}
+    body{
+      min-height:100vh;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      background:#f5f5f5;
+      color:#111;
+      display:flex;
+      justify-content:center;
+      padding:24px 16px;
+    }
 
-  /* ===== LAYOUTS (escolha em personalizado.layout) ===== */
+    .page{
+      width:100%;
+      max-width:430px;
+      min-height:calc(100vh - 48px);
+      background:#fff;
+      border:1px solid #e5e5e5;
+      border-radius:24px;
+      padding:34px 22px 24px;
+      display:flex;
+      flex-direction:column;
+      box-shadow:0 8px 30px rgba(0,0,0,.06);
+    }
 
-  /* grade: ícones grandes em 2 colunas */
-  [data-layout="grade"] .options{display:grid;grid-template-columns:repeat(2,1fr)}
-  [data-layout="grade"] .option{flex-direction:column;justify-content:center;text-align:center;min-height:116px;gap:10px}
-  [data-layout="grade"] .option:last-child:nth-child(odd){grid-column:1/-1}
-  [data-layout="grade"] .text span,
-  [data-layout="grade"] .arrow{display:none}
-  [data-layout="grade"] .text strong{margin:0;font-size:15px}
+    .brand{
+      text-align:center;
+      margin-bottom:28px;
+    }
 
-  /* pilula: botões coloridos arredondados */
-  [data-layout="pilula"] .option{
-    background:var(--destaque);color:var(--destaque-texto);
-    border-color:var(--destaque);border-radius:999px;min-height:64px;
-  }
-  [data-layout="pilula"] .icon{background:rgba(255,255,255,.18);border-radius:50%;width:42px;height:42px;flex-basis:42px;font-size:21px}
-  [data-layout="pilula"] .text span,
-  [data-layout="pilula"] .arrow{color:inherit;opacity:.8}
+    .logo{
+      width:76px;
+      height:76px;
+      border-radius:50%;
+      object-fit:cover;
+      display:block;
+      margin:0 auto 16px;
+      background:#111;
+    }
 
-  /* ===== PÁGINA INICIAL ===== */
-  .marca{
-    width:76px;height:76px;border-radius:22px;margin:0 auto 16px;
-    background:var(--destaque);color:var(--destaque-texto);
-    display:flex;align-items:center;justify-content:center;font-size:32px;
-  }
-  .passos{list-style:none;margin:6px 0 26px;display:flex;flex-direction:column;gap:12px}
-  .passos li{display:flex;gap:14px;align-items:center;font-size:15px;line-height:1.35}
-  .passos b{
-    flex:0 0 30px;height:30px;border-radius:50%;
-    background:var(--icone-bg);display:flex;align-items:center;justify-content:center;font-size:14px;
-  }
-</style>
+    .subtitle{
+  margin-top: 6px;
+  color: #666;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+    .brand h1{
+      font-size:25px;
+      line-height:1.15;
+      font-weight:750;
+      letter-spacing:-.5px;
+    }
+
+    .brand p{
+      margin-top:9px;
+      color:#666;
+      font-size:15px;
+      line-height:1.45;
+    }
+
+    .options{
+      display:flex;
+      flex-direction:column;
+      gap:13px;
+    }
+
+    .option{
+      display:none;
+      align-items:center;
+      gap:15px;
+      width:100%;
+      min-height:76px;
+      padding:13px 16px;
+      border:1px solid #e2e2e2;
+      border-radius:17px;
+      background:#fff;
+      color:#111;
+      text-decoration:none;
+      transition:.15s;
+    }
+
+    .option:hover{
+      transform:translateY(-1px);
+      box-shadow:0 5px 18px rgba(0,0,0,.07);
+    }
+
+    .icon{
+      width:48px;
+      height:48px;
+      flex:0 0 48px;
+      border-radius:14px;
+      background:#f2f2f2;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+    }
+
+    .text{
+      flex:1;
+    }
+
+    .text strong{
+      display:block;
+      font-size:16px;
+      margin-bottom:3px;
+    }
+
+    .text span{
+      display:block;
+      color:#777;
+      font-size:13px;
+    }
+
+    .arrow{
+      color:#aaa;
+      font-size:22px;
+    }
+
+    .footer{
+      margin-top:auto;
+      padding-top:28px;
+      text-align:center;
+      color:#999;
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .nfc{
+      margin-bottom:8px;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
+  </style>
 </head>
 
 <body>
 
 <main class="page">
 
-  <header class="brand">
-    <img id="logo" class="logo" src="" alt="Logo" onerror="this.style.display='none'">
-    <h1 id="titulo"></h1>
-    <p id="subtitle" class="subtitle"></p>
-  </header>
+<header class="brand">
 
-  <section class="options" id="opcoes"></section>
+  <img id="logo" class="logo" src="" alt="Logo">
+
+  <h1 id="titulo">
+    Como podemos ajudar?
+  </h1>
+
+  <p id="subtitle" class="subtitle"></p>
+
+</header>
+
+  <section class="options">
+
+    <a id="whatsapp" class="option" target="_blank">
+      <div class="icon">
+        <i class="fa-brands fa-whatsapp"></i>
+      </div>
+
+      <div class="text">
+        <strong>WhatsApp</strong>
+        <span>Entre em contato conosco</span>
+      </div>
+
+      <div class="arrow">›</div>
+    </a>
+
+    <a id="instagram" class="option" target="_blank">
+      <div class="icon">
+        <i class="fa-brands fa-instagram"></i>
+      </div>
+
+      <div class="text">
+        <strong>Instagram</strong>
+        <span>Acompanhe nossas novidades</span>
+      </div>
+
+      <div class="arrow">›</div>
+    </a>
+
+    <a id="google" class="option" target="_blank">
+      <div class="icon">
+        <i class="fa-brands fa-google"></i>
+      </div>
+
+      <div class="text">
+        <strong>Avalie nossa empresa</strong>
+        <span>Leva menos de 1 minuto</span>
+      </div>
+
+      <div class="arrow">›</div>
+    </a>
+
+  </section>
 
   <footer class="footer">
     <div class="nfc">
       <i class="fa-solid fa-signal"></i>
       Encoste o celular novamente para acessar
     </div>
-    <div>Rápido, simples e seguro.</div>
+
+    <div>
+      Rápido, simples e seguro.
+    </div>
   </footer>
 
 </main>
 
 <script>
 
-/* ============================================================
-   CONFIGURAÇÕES GERAIS
-   ============================================================ */
-
-// Seu WhatsApp para a página inicial (com DDI+DDD, só números). Vazio = esconde o botão.
-const CONTATO_WHATSAPP = "";
-
-// Cliente que aparece no botão "Ver exemplo" da página inicial.
-const DEMO_ID = "cli_a7x9k2";
-
-
-/* ============================================================
-   CLIENTES
-
-   estilo: "padrao"         -> visual padrão do ZapInTag
-   estilo: "personalizado"  -> aplica o bloco "personalizado" abaixo
-
-   Para trocar um cliente, mude só a palavra em "estilo".
-   Para testar sem editar: adicione &estilo=personalizado no link.
-
-   layout (em personalizado): "lista" | "grade" | "pilula"
-   cores: fundo, cartao, texto, suave, borda, icone, destaque, destaqueTexto
-   fonte: nome de qualquer fonte do Google Fonts (ex.: "Poppins")
-   ============================================================ */
-
 const clientes = {
 
   "cli_a7x9k2": {
-    estilo: "padrao",
     nome: "EMPRESA",
     subtitle: "SLOGAN OU FRASE",
     logo: "logos/.png",
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
-    google: "https://search.google.com/local/writereview?placeid=",
-    endereco: "",
-    personalizado: {
-      layout: "lista",
-      fonte: "",
-      raio: "17px",
-      cores: {}
-    }
+    google: "https://search.google.com/local/writereview?placeid="
   },
 
   "cli_b4m8r1": {
-    estilo: "padrao",
     nome: "SkyFit Invernada",
     subtitle: "SLA",
     logo: "logos/Designer.png",
     whatsapp: "https://wa.me/19999854416",
     instagram: "https://www.instagram.com/skyfitinvernada/",
-    google: "https://search.google.com/local/writereview?placeid=",
-    endereco: "",
-    personalizado: {
-      layout: "pilula",
-      fonte: "Poppins",
-      raio: "22px",
-      cores: {
-        fundo: "#0b1b2b",
-        cartao: "#12283d",
-        texto: "#ffffff",
-        suave: "#9db4c8",
-        borda: "#1e3a56",
-        icone: "#1e3a56",
-        destaque: "#2ec4b6",
-        destaqueTexto: "#062a2f"
-      }
-    }
+    google: "https://search.google.com/local/writereview?placeid="
   },
-
+  
   "cli_d2k6n8": {
-    estilo: "padrao",
     nome: "EMPRESA",
     subtitle: "SLOGAN OU FRASE",
     logo: "logos/.png",
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
-    google: "https://search.google.com/local/writereview?placeid=",
-    endereco: "",
-    personalizado: { layout: "lista", fonte: "", raio: "17px", cores: {} }
+    google: "https://search.google.com/local/writereview?placeid="
   },
 
   "cli_e5q1v9": {
-    estilo: "padrao",
     nome: "EMPRESA",
     subtitle: "SLOGAN OU FRASE",
     logo: "logos/.png",
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
-    google: "https://search.google.com/local/writereview?placeid=",
-    endereco: "",
-    personalizado: { layout: "lista", fonte: "", raio: "17px", cores: {} }
+    google: "https://search.google.com/local/writereview?placeid="
   },
 
   "cli_c9x3p7": {
-    estilo: "padrao",
     nome: "EMPRESA",
     subtitle: "SLOGAN OU FRASE",
     logo: "logos/.png",
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
-    google: "https://search.google.com/local/writereview?placeid=",
-    endereco: "",
-    personalizado: { layout: "lista", fonte: "", raio: "17px", cores: {} }
+    google: "https://search.google.com/local/writereview?placeid="
   }
 
 };
 
+function configurarBotao(id, link) {
+  const botao = document.getElementById(id);
 
-/* ============================================================
-   BOTÕES (só aparecem se o cliente tiver o link preenchido)
-   ============================================================ */
-
-const BOTOES = [
-  { campo: "whatsapp",  icone: "fa-brands fa-whatsapp",   titulo: "WhatsApp",              sub: "Entre em contato conosco" },
-  { campo: "instagram", icone: "fa-brands fa-instagram",  titulo: "Instagram",             sub: "Acompanhe nossas novidades" },
-  { campo: "google",    icone: "fa-brands fa-google",     titulo: "Avalie nossa empresa",  sub: "Leva menos de 1 minuto" },
-  { campo: "endereco",  icone: "fa-solid fa-location-dot", titulo: "Como chegar",          sub: "Abrir no mapa",
-    link: c => c.endereco
-      ? "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(c.endereco)
-      : "" }
-];
-
-// Links que ainda estão só com o modelo, sem dados do cliente
-function incompleto(link) {
-  return !link || !link.trim() ||
-    link === "https://wa.me/" ||
-    link === "https://www.instagram.com//" ||
-    link.endsWith("placeid=");
-}
-
-function htmlBotao(icone, titulo, sub, link) {
-  return `
-    <a class="option" href="${link}" target="_blank" rel="noopener">
-      <div class="icon"><i class="${icone}"></i></div>
-      <div class="text"><strong>${titulo}</strong><span>${sub}</span></div>
-      <div class="arrow">›</div>
-    </a>`;
-}
-
-
-/* ============================================================
-   ESTILO
-   ============================================================ */
-
-const VARIAVEIS = {
-  fundo: "--fundo", cartao: "--cartao", texto: "--texto", suave: "--suave",
-  borda: "--borda", icone: "--icone-bg", destaque: "--destaque", destaqueTexto: "--destaque-texto"
-};
-
-function aplicarEstilo(cliente, modo) {
-  const raiz = document.documentElement.style;
-  const p = (modo === "personalizado" && cliente.personalizado) ? cliente.personalizado : {};
-  const cores = p.cores || {};
-
-  for (const chave in VARIAVEIS) {
-    if (cores[chave]) raiz.setProperty(VARIAVEIS[chave], cores[chave]);
+  if (link && link.trim() !== "") {
+    botao.href = link;
+    botao.style.display = "flex";
+  } else {
+    botao.style.display = "none";
   }
-  if (p.raio) raiz.setProperty("--raio", p.raio);
-
-  if (p.fonte) {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "https://fonts.googleapis.com/css2?family=" +
-      encodeURIComponent(p.fonte).replace(/%20/g, "+") + ":wght@400;600;700&display=swap";
-    document.head.appendChild(link);
-    raiz.setProperty("--fonte", `"${p.fonte}", -apple-system, "Segoe UI", Arial, sans-serif`);
-  }
-
-  document.body.dataset.layout = p.layout || "lista";
-  document.querySelector('meta[name="theme-color"]').content = cores.fundo || "#111111";
 }
-
-
-/* ============================================================
-   PÁGINA INICIAL (quando não há ?cliente=)
-   ============================================================ */
-
-function mostrarInicio() {
-  document.title = "ZapInTag";
-  aplicarEstilo({}, "padrao");
-
-  const contato = CONTATO_WHATSAPP
-    ? htmlBotao("fa-brands fa-whatsapp", "Quero o meu",
-        "Fale com a gente no WhatsApp",
-        "https://wa.me/" + CONTATO_WHATSAPP + "?text=" +
-        encodeURIComponent("Oi! Quero saber mais sobre o ZapInTag."))
-    : "";
-
-  document.querySelector(".page").innerHTML = `
-    <header class="brand">
-      <div class="marca"><i class="fa-solid fa-wifi"></i></div>
-      <h1>Um toque e o cliente chega até você</h1>
-      <p class="subtitle">Plaquinha de acrílico com NFC e QR Code que abre seu WhatsApp, Instagram e avaliações do Google.</p>
-    </header>
-
-    <ol class="passos">
-      <li><b>1</b> O cliente encosta o celular na plaquinha, ou lê o QR Code</li>
-      <li><b>2</b> Sua página abre na hora, sem baixar nada</li>
-      <li><b>3</b> Ele chama no WhatsApp, te segue ou deixa uma avaliação</li>
-    </ol>
-
-    <section class="options">
-      ${contato}
-      ${htmlBotao("fa-solid fa-eye", "Ver exemplo", "Veja como fica para o seu cliente", "?cliente=" + DEMO_ID)}
-    </section>
-
-    <footer class="footer">
-      <div>Rápido, simples e seguro.</div>
-    </footer>`;
-}
-
-
-/* ============================================================
-   INÍCIO
-   ============================================================ */
 
 const params = new URLSearchParams(window.location.search);
-const clienteId = params.get("cliente");
 
-if (!clienteId) {
+const clienteId =
+  params.get("cliente") || "cli_a7x9k2";
 
-  mostrarInicio();
+const cliente = clientes[clienteId];
+
+if (cliente) {
+
+  document.getElementById("titulo").innerText =
+    cliente.nome;
+
+  document.getElementById("logo").src =
+    cliente.logo;
+
+  document.getElementById("subtitle").innerText =
+  cliente.subtitle || "";
+
+  configurarBotao("whatsapp", cliente.whatsapp);
+  configurarBotao("instagram", cliente.instagram);
+  configurarBotao("google", cliente.google);
 
 } else {
 
-  const cliente = clientes[clienteId];
+  document.querySelector(".page").innerHTML = `
+    <div style="
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:40px;
+    ">
+      <div style="font-size:56px;margin-bottom:20px;">
+        ⚠️
+      </div>
 
-  if (cliente) {
+      <h1 style="margin-bottom:12px;">
+        Cliente não encontrado
+      </h1>
 
-    const modo = params.get("estilo") || cliente.estilo || "padrao";
-    aplicarEstilo(cliente, modo);
+      <p style="
+        color:#666;
+        line-height:1.6;
+      ">
+        O identificador informado não existe ou não está ativo.
+      </p>
+    </div>
+  `;
 
-    document.title = cliente.nome;
-    document.getElementById("titulo").innerText = cliente.nome;
-    document.getElementById("subtitle").innerText = cliente.subtitle || "";
-
-    const logo = document.getElementById("logo");
-    if (cliente.logo) logo.src = cliente.logo; else logo.style.display = "none";
-
-    document.getElementById("opcoes").innerHTML = BOTOES
-      .map(b => {
-        const link = b.link ? b.link(cliente) : cliente[b.campo];
-        return (b.link ? !link : incompleto(link)) ? "" : htmlBotao(b.icone, b.titulo, b.sub, link);
-      })
-      .join("");
-
-  } else {
-
-    document.querySelector(".page").innerHTML = `
-      <div style="height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px;">
-        <div style="font-size:56px;margin-bottom:20px;">⚠️</div>
-        <h1 style="margin-bottom:12px;">Cliente não encontrado</h1>
-        <p style="color:#666;line-height:1.6;">O identificador informado não existe ou não está ativo.</p>
-      </div>`;
-
-  }
 }
 
 </script>
