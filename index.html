@@ -9,13 +9,58 @@
   <title>Contato Digital</title>
 
   <style>
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
+  *{box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+  .marca{
+  width:76px;
+  height:76px;
+  border-radius:22px;
+  margin:0 auto 16px;
+  background:#111;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:32px;
+}
 
-    body{
+.subtitle{
+  margin-top:9px;
+  color:#666;
+  font-size:15px;
+  line-height:1.45;
+}
+
+.passos{
+  list-style:none;
+  margin:6px 0 26px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.passos li{
+  display:flex;
+  gap:14px;
+  align-items:center;
+  font-size:15px;
+  line-height:1.35;
+}
+
+.passos b{
+  flex:0 0 30px;
+  height:30px;
+  border-radius:50%;
+  background:#f2f2f2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+}
+
+    .body{
       min-height:100vh;
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
       background:#f5f5f5;
@@ -277,56 +322,122 @@ function configurarBotao(id, link){
   }
 }
 
+function mostrarInicio(){
+  document.title = "Contato Digital";
+
+  document.querySelector(".page").innerHTML = `
+    <header class="brand">
+      <div class="marca">
+        <i class="fa-solid fa-wifi"></i>
+      </div>
+
+      <h1>
+        Um toque e o cliente chega até você
+      </h1>
+
+      <p class="subtitle">
+        Plaquinha de acrílico com NFC e QR Code que abre seu WhatsApp,
+        Instagram e avaliações do Google.
+      </p>
+    </header>
+
+    <ol class="passos">
+      <li>
+        <b>1</b>
+        O cliente encosta o celular na plaquinha, ou lê o QR Code
+      </li>
+
+      <li>
+        <b>2</b>
+        Sua página abre na hora, sem baixar nada
+      </li>
+
+      <li>
+        <b>3</b>
+        Ele chama no WhatsApp, te segue ou deixa uma avaliação
+      </li>
+    </ol>
+
+    <section class="options">
+      <a href="?cliente=cli_b4m8r1" class="option">
+        <div class="icon">
+          <i class="fa-solid fa-eye"></i>
+        </div>
+
+        <div class="text">
+          <strong>Ver exemplo</strong>
+          <span>Veja como fica para o seu cliente</span>
+        </div>
+
+        <div class="arrow">›</div>
+      </a>
+    </section>
+
+    <footer class="footer">
+      <div>
+        Rápido, simples e seguro.
+      </div>
+    </footer>
+  `;
+}
+
 const params = new URLSearchParams(window.location.search);
 
-const clienteId =
-  params.get("cliente") || "cli_a7x9k2";
+const clienteId = params.get("cliente");
 
-const cliente = clientes[clienteId];
+if (!clienteId) {
 
-if(cliente){
-
-  const tituloEl = document.getElementById("titulo");
-  if(tituloEl) tituloEl.innerText = cliente.nome;
-
-  const logoEl = document.getElementById("logo");
-  if(logoEl && cliente.logo) logoEl.src = cliente.logo;
-
-  const subtitleEl = document.getElementById("subtitle");
-  if(subtitleEl) subtitleEl.innerText = cliente.subtitle || "";
-
-  configurarBotao("whatsapp", cliente.whatsapp);
-  configurarBotao("instagram", cliente.instagram);
-  configurarBotao("google", cliente.google);
+  mostrarInicio();
 
 } else {
 
-  document.querySelector(".page").innerHTML = `
-    <div style="
-      height:100%;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      padding:40px;
-    ">
-      <div style="font-size:56px;margin-bottom:20px;">
-        ⚠️
-      </div>
+  const cliente = clientes[clienteId];
 
-      <h1 style="margin-bottom:12px;">
-        Cliente não encontrado
-      </h1>
+  if (cliente) {
 
-      <p style="
-        color:#666;
-        line-height:1.6;
+    const tituloEl = document.getElementById("titulo");
+    if (tituloEl) tituloEl.innerText = cliente.nome;
+
+    const logoEl = document.getElementById("logo");
+    if (logoEl && cliente.logo) logoEl.src = cliente.logo;
+
+    const subtitleEl = document.getElementById("subtitle");
+    if (subtitleEl) subtitleEl.innerText = cliente.subtitle || "";
+
+    configurarBotao("whatsapp", cliente.whatsapp);
+    configurarBotao("instagram", cliente.instagram);
+    configurarBotao("google", cliente.google);
+
+  } else {
+
+    document.querySelector(".page").innerHTML = `
+      <div style="
+        height:100%;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        padding:40px;
       ">
-        O identificador informado não existe ou não está ativo.
-      </p>
-    </div>
-  `;
+        <div style="font-size:56px;margin-bottom:20px;">
+          ⚠️
+        </div>
+
+        <h1 style="margin-bottom:12px;">
+          Cliente não encontrado
+        </h1>
+
+        <p style="
+          color:#666;
+          line-height:1.6;
+        ">
+          O identificador informado não existe ou não está ativo.
+        </p>
+      </div>
+    `;
+
+  }
 
 }
 
