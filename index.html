@@ -149,13 +149,13 @@
 <main class="page">
 
   <header class="brand">
-    
+    <img id="logo" class="logo" alt="Logo">
 
     <h1 id="titulo">
       Como podemos ajudar?
     </h1>
 
-    <p>
+    <p id="subtitle">
       Escolha uma opção para continuar.
     </p>
   </header>
@@ -237,7 +237,7 @@ const clientes = {
     instagram: "https://www.instagram.com/skyfitinvernada/",
     google: "https://search.google.com/local/writereview?placeid="
   },
-  
+
   "cli_d2k6n8": {
     nome: "EMPRESA",
     subtitle: "SLOGAN OU FRASE",
@@ -269,6 +269,7 @@ const clientes = {
 
 function configurarBotao(id, link){
   const botao = document.getElementById(id);
+  if(!botao) return;
 
   if(link && link.trim() !== ""){
     botao.href = link;
@@ -285,14 +286,14 @@ const cliente = clientes[clienteId];
 
 if(cliente){
 
-  document.getElementById("titulo").innerText =
-    cliente.nome;
+  const tituloEl = document.getElementById("titulo");
+  if(tituloEl) tituloEl.innerText = cliente.nome;
 
-  document.getElementById("logo").src =
-    cliente.logo;
+  const logoEl = document.getElementById("logo");
+  if(logoEl && cliente.logo) logoEl.src = cliente.logo;
 
-  document.getElementById("subtitle").innerText =
-  cliente.subtitle || "";
+  const subtitleEl = document.getElementById("subtitle");
+  if(subtitleEl) subtitleEl.innerText = cliente.subtitle || "";
 
   configurarBotao("whatsapp", cliente.whatsapp);
   configurarBotao("instagram", cliente.instagram);
