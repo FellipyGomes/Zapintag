@@ -16,14 +16,16 @@
   .marca{
   width:76px;
   height:76px;
-  border-radius:22px;
   margin:0 auto 16px;
-  background:#111;
-  color:#fff;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:32px;
+}
+
+#logoEmpresa{
+  width:60px;
+  height:60px;
+  object-fit:contain;
 }
 
 .subtitle{
@@ -200,7 +202,7 @@
       Como podemos ajudar?
     </h1>
 
-    <p id="subtitle">
+    <p id="subtitle" class="subtitle">
       Escolha uma opção para continuar.
     </p>
   </header>
@@ -323,61 +325,89 @@ function configurarBotao(id, link){
 }
 
 function mostrarInicio(){
-  document.title = "Contato Digital";
+
+  document.title = "LinkHubb";
 
   document.querySelector(".page").innerHTML = `
+
     <header class="brand">
+
       <div class="marca">
-        <i class="fa-solid fa-wifi"></i>
+        <img id="logoEmpresa"
+             src="logos/InHub.png"
+             alt="LinkHubb">
       </div>
 
       <h1>
-        Um toque e o cliente chega até você
+        LinkHubb
       </h1>
 
       <p class="subtitle">
-        Plaquinha de acrílico com NFC e QR Code que abre seu WhatsApp,
-        Instagram e avaliações do Google.
+        Seu negócio a um toque
       </p>
+
     </header>
 
     <ol class="passos">
+
       <li>
         <b>1</b>
-        O cliente encosta o celular na plaquinha, ou lê o QR Code
+        O cliente aproxima o celular ou escaneia o QR Code
       </li>
 
       <li>
         <b>2</b>
-        Sua página abre na hora, sem baixar nada
+        Sua página abre instantaneamente, sem baixar aplicativos
       </li>
 
       <li>
         <b>3</b>
-        Ele chama no WhatsApp, te segue ou deixa uma avaliação
+        Ele acessa WhatsApp, Instagram e avaliações em apenas um toque
       </li>
+
     </ol>
 
     <section class="options">
-      <a href="?cliente=cli_b4m8r1" class="option" style="display:flex
-        <div class="icon">
-          <i class="fa-solid fa-eye"></i>
+
+      <a href="?cliente=cli_a7x9k2"
+         class="option"
+         style="-solid fa-eye"></i>
         </div>
 
         <div class="text">
-          <strong>Ver exemplo</strong>
-          <span>Veja como fica para o seu cliente</span>
+          <strong>Ver demonstração</strong>
+          <span>Veja um exemplo completo</span>
         </div>
 
         <div class="arrow">›</div>
+
       </a>
+
     </section>
 
     <footer class="footer">
+
+      <div class="nfc">
+
+        <img
+          src="logos/InHub.png"
+          alt="LinkHubb"
+          style="
+            width:18px;
+            height:18px;
+            object-fit:contain;
+          ">
+
+        Powered by LinkHubb
+
+      </div>
+
       <div>
         Rápido, simples e seguro.
       </div>
+
     </footer>
+
   `;
 }
 
