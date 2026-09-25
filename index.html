@@ -13,54 +13,10 @@
   margin:0;
   padding:0;
 }
-  .marca{
-  width:76px;
-  height:76px;
-  margin:0 auto 16px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
 
-#logoEmpresa{
-  width:410px;
-  height:410px;
-  object-fit:contain;
-}
-
-.subtitle{
-  margin-top:9px;
-  color:#ffffff;
-  font-size:15px;
-  line-height:1.45;
-}
-
-.passos{
-  list-style:none;
-  margin:6px 0 26px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-.passos li{
-  display:flex;
-  gap:14px;
-  align-items:center;
-  font-size:15px;
-  line-height:1.35;
-}
-
-.passos b{
-  flex:0 0 30px;
-  height:30px;
-  border-radius:50%;
-  background:#FFC107;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:14px;
-}
+  :root{
+    --accent:#FFC107;
+  }
 
     body{
       min-height:100vh;
@@ -77,13 +33,18 @@
       max-width:430px;
       min-height:calc(100vh - 48px);
       background:#282828;
-      border:1px solid #FFC107;
+      border:1px solid var(--accent);
       border-radius:24px;
       padding:34px 22px 24px;
       display:flex;
       flex-direction:column;
       box-shadow:0 8px 30px rgba(0,0,0,.06);
     }
+
+    /* ===================================================
+       PÁGINA DO CLIENTE (whatsapp / instagram / google)
+       Classes próprias, não usadas pela tela inicial.
+    =================================================== */
 
     .brand{
       text-align:center;
@@ -98,6 +59,7 @@
       display:block;
       margin:0 auto 16px;
       background:#111;
+      border:2px solid var(--accent);
     }
 
     .brand h1{
@@ -107,9 +69,9 @@
       letter-spacing:-.5px;
     }
 
-    .brand p{
+    .subtitle{
       margin-top:9px;
-      color:#666;
+      color:#c9c9c9;
       font-size:15px;
       line-height:1.45;
     }
@@ -187,6 +149,109 @@
       display:inline-flex;
       align-items:center;
       gap:6px;
+    }
+
+    /* ===================================================
+       TELA INICIAL (LinkHubb)
+       Classes com prefixo "home-", isoladas da página do
+       cliente: mudar uma nunca afeta a outra.
+    =================================================== */
+
+    .home-brand{
+      text-align:center;
+      margin-bottom:24px;
+    }
+
+    .home-marca{
+      width:132px;
+      height:132px;
+      margin:0 auto 18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#ffffff;
+      border-radius:28px;
+      padding:16px;
+      box-shadow:0 10px 28px rgba(0,0,0,.35);
+    }
+
+    .home-logo{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+
+    .home-title{
+      font-size:23px;
+      font-weight:750;
+      letter-spacing:-.5px;
+    }
+
+    .home-subtitle{
+      margin-top:8px;
+      color:#c9c9c9;
+      font-size:15px;
+      line-height:1.45;
+    }
+
+    .passos{
+      list-style:none;
+      margin:24px 0 26px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .passos li{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      font-size:15px;
+      line-height:1.35;
+      color:#e6e6e6;
+    }
+
+    .passos b{
+      flex:0 0 30px;
+      height:30px;
+      border-radius:50%;
+      background:#FFC107;
+      color:#111;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:14px;
+    }
+
+    .home-cta{
+      margin-top:22px;
+    }
+
+    .home-cta-text{
+      font-size:14px;
+      color:#c9c9c9;
+      line-height:1.5;
+      margin-bottom:12px;
+    }
+
+    .home-option{
+      display:flex;
+      align-items:center;
+      gap:15px;
+      width:100%;
+      min-height:76px;
+      padding:13px 16px;
+      border:1px solid #e2e2e2;
+      border-radius:17px;
+      background:#fff;
+      color:#111;
+      text-decoration:none;
+      transition:.15s;
+    }
+
+    .home-option:hover{
+      transform:translateY(-1px);
+      box-shadow:0 5px 18px rgba(0,0,0,.07);
     }
   </style>
 </head>
@@ -270,7 +335,8 @@ const clientes = {
     logo: "logos/Designer.png",
     whatsapp: "https://wa.me/19999854416",
     instagram: "https://www.instagram.com/skyfitinvernada/",
-    google: "https://search.google.com/local/writereview?placeid=ChIJtakFYQDNyJQR-mG-j5o3IMA"
+    google: "https://search.google.com/local/writereview?placeid=ChIJtakFYQDNyJQR-mG-j5o3IMA",
+    tema: null // ex.: { accent: "#00C2FF" } para dar um visual próprio a este cliente
   },
 
   "cli_b4m8r1": {
@@ -279,7 +345,8 @@ const clientes = {
     logo: "logos/.png",
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
-    google: "https://search.google.com/local/writereview?placeid="
+    google: "https://search.google.com/local/writereview?placeid=",
+    tema: null
   },
 
   "cli_d2k6n8": {
@@ -288,7 +355,8 @@ const clientes = {
     logo: "logos/.png",
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
-    google: "https://search.google.com/local/writereview?placeid="
+    google: "https://search.google.com/local/writereview?placeid=",
+    tema: null
   },
 
   "cli_e5q1v9": {
@@ -297,7 +365,8 @@ const clientes = {
     logo: "logos/.png",
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
-    google: "https://search.google.com/local/writereview?placeid="
+    google: "https://search.google.com/local/writereview?placeid=",
+    tema: null
   },
 
   "cli_c9x3p7": {
@@ -306,7 +375,8 @@ const clientes = {
     logo: "logos/.png",
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
-    google: "https://search.google.com/local/writereview?placeid="
+    google: "https://search.google.com/local/writereview?placeid=",
+    tema: null
   }
 
 };
@@ -321,23 +391,33 @@ function configurarBotao(id, link){
   }
 }
 
+// Aplica o "estilo próprio" do cliente (ou volta ao padrão quando não há tema).
+// É a "chave" que troca rápido do padrão para o visual daquele cliente,
+// sem mexer em nada dos outros clientes nem na tela inicial.
+function aplicarTema(tema){
+  const pageEl = document.querySelector(".page");
+  const accent = (tema && tema.accent) ? tema.accent : "#FFC107";
+  pageEl.style.setProperty("--accent", accent);
+}
+
 function mostrarInicio(){
 
   document.title = "LinkHubb";
+  aplicarTema(null);
 
   document.querySelector(".page").innerHTML = `
 
-    <header class="brand">
+    <header class="home-brand">
 
-      <div class="marca">
-        <img id="logoEmpresa"
+      <div class="home-marca">
+        <img class="home-logo"
              src="logos/InHub.png"
              alt="LinkHubb">
       </div>
 
-  
+      <h1 class="home-title">LinkHubb</h1>
 
-      <p class="subtitle">
+      <p class="home-subtitle">
         Seu negócio a um toque
       </p>
 
@@ -364,9 +444,10 @@ function mostrarInicio(){
 
     <section class="options">
 
-      <a href="?cliente=cli_a7x9k2"
-         class="option"
-         style="-solid fa-eye"></i>
+      <a href="?cliente=cli_a7x9k2" class="home-option">
+
+        <div class="icon">
+          <i class="fa-solid fa-eye"></i>
         </div>
 
         <div class="text">
@@ -379,6 +460,29 @@ function mostrarInicio(){
       </a>
 
     </section>
+
+    <div class="home-cta">
+
+      <p class="home-cta-text">
+        Entre em contato conosco para realizar seu orçamento
+      </p>
+
+      <a href="https://wa.me/5519999854416" target="_blank" class="home-option">
+
+        <div class="icon">
+          <i class="fa-brands fa-whatsapp"></i>
+        </div>
+
+        <div class="text">
+          <strong>Falar no WhatsApp</strong>
+          <span>Solicite seu orçamento agora</span>
+        </div>
+
+        <div class="arrow">›</div>
+
+      </a>
+
+    </div>
 
     <footer class="footer">
 
@@ -414,6 +518,8 @@ if (!clienteId) {
   const cliente = clientes[clienteId];
 
   if (cliente) {
+
+    aplicarTema(cliente.tema);
 
     const tituloEl = document.getElementById("titulo");
     if (tituloEl) tituloEl.innerText = cliente.nome;
