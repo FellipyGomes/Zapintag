@@ -335,6 +335,19 @@
       <div class="arrow">›</div>
     </a>
 
+    <a id="localizacao" class="option" target="_blank">
+      <div class="icon">
+        <i class="fa-solid fa-location-dot"></i>
+      </div>
+
+      <div class="text">
+        <strong>Como chegar aqui</strong>
+        <span>Veja a rota até nós</span>
+      </div>
+
+      <div class="arrow">›</div>
+    </a>
+
   </section>
 
   <footer class="footer">
@@ -359,6 +372,7 @@ const clientes = {
     instagram: "https://www.instagram.com/altiorbarbearia/",
     google: "https://search.google.com/local/writereview?placeid=ChIJIyPsKtLPyJQRbr6S7fj07cQ",
     site: "", // se o cliente tiver site, cole o link aqui (senão deixe "" que o botão não aparece)
+    localizacao: "https://www.google.com/maps/dir/?api=1&destination=Altior+Barbearia&destination_place_id=ChIJIyPsKtLPyJQRbr6S7fj07cQ", // link "como chegar" (Google Maps). Deixe "" para ocultar o botão
     tema: { accent: "#d9ac82" }, // ex.: { accent: "#00C2FF" } para dar um visual próprio a este cliente
 
     // Horário de funcionamento (usado só para mostrar "Aberto"/"Fechado" no topo).
@@ -384,6 +398,7 @@ const clientes = {
     instagram: "https://www.instagram.com/chaveiro_roldaovalinhos/",
     google: "https://search.google.com/local/writereview?placeid=ChIJQfH6AnHNyJQRnRchAIqCDTg",
     site: "",
+    localizacao: "https://www.google.com/maps/dir/?api=1&destination=Chaveiro+Rold%C3%A3o&destination_place_id=ChIJQfH6AnHNyJQRnRchAIqCDTg",
     tema: { accent: "#d9ac82" },
     horario: {
       0: [{ abre:"09:00", fecha:"15:00" }],
@@ -404,6 +419,7 @@ const clientes = {
     instagram: "https://www.instagram.com/petshopmalu2026/",
     google: "https://search.google.com/local/writereview?placeid=ChIJN-lsgBnNyJQRqh7nSOiJZVY",
     site: "https://www.petshopmalu.com.br/",
+    localizacao: "https://www.google.com/maps/dir/?api=1&destination=Petshop+Malu&destination_place_id=ChIJN-lsgBnNyJQRqh7nSOiJZVY",
     tema: null,
     horario: {
       0: [{ abre:"09:00", fecha:"15:00" }],
@@ -424,6 +440,7 @@ const clientes = {
     instagram: "https://www.instagram.com//",
     google: "https://search.google.com/local/writereview?placeid=",
     site: "",
+    localizacao: "", // cole aqui o link "como chegar" do Google Maps (senão deixe "" que o botão não aparece)
     tema: null,
     horario: null // preencha no mesmo formato do exemplo em cli_a7x9k2
   },
@@ -436,6 +453,7 @@ const clientes = {
     instagram: "https://www.instagram.com//",
     google: "https://search.google.com/local/writereview?placeid=",
     site: "",
+    localizacao: "",
     tema: null,
     horario: null // preencha no mesmo formato do exemplo em cli_a7x9k2
   }
@@ -631,6 +649,7 @@ if (!clienteId) {
     configurarBotao("instagram", cliente.instagram);
     configurarBotao("google", cliente.google);
     configurarBotao("site", cliente.site);
+    configurarBotao("localizacao", cliente.localizacao);
 
     atualizarStatus(cliente.horario);
 
