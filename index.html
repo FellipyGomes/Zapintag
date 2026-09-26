@@ -76,6 +76,29 @@
       line-height:1.45;
     }
 
+    .status{
+      display:none;
+      margin-top:10px;
+      padding:4px 16px;
+      border-radius:20px;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+    }
+
+    .status.aberto{
+      color:#3ddc73;
+      background:rgba(61,220,115,.12);
+      border:1px solid rgba(61,220,115,.45);
+    }
+
+    .status.fechado{
+      color:#ff5c5c;
+      background:rgba(255,92,92,.12);
+      border:1px solid rgba(255,92,92,.45);
+    }
+
     .options{
       display:flex;
       flex-direction:column;
@@ -257,6 +280,8 @@
     <p id="subtitle" class="subtitle">
       Escolha uma opção para continuar.
     </p>
+
+    <p id="status" class="status"></p>
   </header>
 
   <section class="options">
@@ -300,6 +325,19 @@
       <div class="arrow">›</div>
     </a>
 
+    <a id="site" class="option" target="_blank">
+      <div class="icon">
+        <i class="fa-solid fa-globe"></i>
+      </div>
+
+      <div class="text">
+        <strong>Site</strong>
+        <span>Visite nosso site</span>
+      </div>
+
+      <div class="arrow">›</div>
+    </a>
+
   </section>
 
   <footer class="footer">
@@ -321,9 +359,24 @@ const clientes = {
     subtitle: "You Can Fly",
     logo: "logos/Designer.png",
     whatsapp: "https://wa.me/5519996001716",
-    instagram: "https://www.instagram.com/skyfitinvernada/",
-    google: "https://search.google.com/local/writereview?placeid=ChIJtakFYQDNyJQR-mG-j5o3IMA",
-    tema: { accent: "#00C2FF" } // ex.: { accent: "#00C2FF" } para dar um visual próprio a este cliente
+    instagram: "https://www.instagram.com/petshopmalu2026/",
+    google: "https://search.google.com/local/writereview?placeid=ChIJN-lsgBnNyJQRqh7nSOiJZVY",
+    site: "https://www.petshopmalu.com.br/", // se o cliente tiver site, cole o link aqui (senão deixe "" que o botão não aparece)
+    tema: { accent: "#00C2FF" }, // ex.: { accent: "#00C2FF" } para dar um visual próprio a este cliente
+
+    // Horário de funcionamento (usado só para mostrar "Aberto"/"Fechado" no topo).
+    // 0=domingo, 1=segunda, 2=terça, 3=quarta, 4=quinta, 5=sexta, 6=sábado.
+    // Cada dia: null = fechado o dia todo, ou uma lista de intervalos { abre:"HH:MM", fecha:"HH:MM" }.
+    // Deixe o objeto inteiro como null se não quiser mostrar o selo para esse cliente.
+    horario: {
+      0: null,
+      1: [{ abre:"06:00", fecha:"22:00" }],
+      2: [{ abre:"06:00", fecha:"22:00" }],
+      3: [{ abre:"06:00", fecha:"22:00" }],
+      4: [{ abre:"06:00", fecha:"22:00" }],
+      5: [{ abre:"06:00", fecha:"22:00" }],
+      6: [{ abre:"08:00", fecha:"12:00" }]
+    }
   },
 
   "cli_b4m8r1": {
@@ -333,7 +386,9 @@ const clientes = {
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
     google: "https://search.google.com/local/writereview?placeid=",
-    tema: null
+    site: "",
+    tema: null,
+    horario: null // preencha no mesmo formato do exemplo em cli_a7x9k2
   },
 
   "cli_d2k6n8": {
@@ -343,7 +398,9 @@ const clientes = {
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
     google: "https://search.google.com/local/writereview?placeid=",
-    tema: null
+    site: "",
+    tema: null,
+    horario: null // preencha no mesmo formato do exemplo em cli_a7x9k2
   },
 
   "cli_e5q1v9": {
@@ -353,7 +410,9 @@ const clientes = {
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
     google: "https://search.google.com/local/writereview?placeid=",
-    tema: null
+    site: "",
+    tema: null,
+    horario: null // preencha no mesmo formato do exemplo em cli_a7x9k2
   },
 
   "cli_c9x3p7": {
@@ -363,7 +422,9 @@ const clientes = {
     whatsapp: "https://wa.me/",
     instagram: "https://www.instagram.com//",
     google: "https://search.google.com/local/writereview?placeid=",
-    tema: null
+    site: "",
+    tema: null,
+    horario: null // preencha no mesmo formato do exemplo em cli_a7x9k2
   }
 
 };
@@ -376,6 +437,43 @@ function configurarBotao(id, link){
     botao.href = link;
     botao.style.display = "flex";
   }
+}
+
+// Verifica se o horário atual cai dentro de algum intervalo do dia de hoje.
+// Retorna true (aberto), false (fechado) ou null (sem horário cadastrado).
+function estaAberto(horario){
+  if(!horario) return null;
+
+  const agora = new Date();
+  const intervalosHoje = horario[agora.getDay()];
+
+  if(!intervalosHoje || intervalosHoje.length === 0) return false;
+
+  const minutosAgora = agora.getHours() * 60 + agora.getMinutes();
+
+  return intervalosHoje.some(intervalo => {
+    const [hAbre, mAbre] = intervalo.abre.split(":").map(Number);
+    const [hFecha, mFecha] = intervalo.fecha.split(":").map(Number);
+    return minutosAgora >= (hAbre * 60 + mAbre) && minutosAgora <= (hFecha * 60 + mFecha);
+  });
+}
+
+// Atualiza o selo "Aberto"/"Fechado" no topo da página com base no horário do cliente.
+// Se o cliente não tiver horário cadastrado (horario: null), o selo fica oculto.
+function atualizarStatus(horario){
+  const statusEl = document.getElementById("status");
+  if(!statusEl) return;
+
+  const aberto = estaAberto(horario);
+
+  if(aberto === null){
+    statusEl.style.display = "none";
+    return;
+  }
+
+  statusEl.textContent = aberto ? "Aberto" : "Fechado";
+  statusEl.className = "status " + (aberto ? "aberto" : "fechado");
+  statusEl.style.display = "inline-block";
 }
 
 // Aplica o "estilo próprio" do cliente (ou volta ao padrão quando não há tema).
@@ -519,6 +617,9 @@ if (!clienteId) {
     configurarBotao("whatsapp", cliente.whatsapp);
     configurarBotao("instagram", cliente.instagram);
     configurarBotao("google", cliente.google);
+    configurarBotao("site", cliente.site);
+
+    atualizarStatus(cliente.horario);
 
   } else {
 
